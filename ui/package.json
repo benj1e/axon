@@ -2,17 +2,18 @@
   "name": "ui",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "main": "main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "electron": "electron .",
+    "start": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "concurrently": "^9.2.1",
     "electron": "^42.2.0",
+    "framer-motion": "^12.40.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "tailwindcss": "^4.3.0",

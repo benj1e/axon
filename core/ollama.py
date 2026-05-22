@@ -41,3 +41,12 @@ Respond with ONLY the category name, nothing else."""
 
     valid = {"files", "email", "settings", "web"}
     return result if result in valid else "unknown"
+
+
+def chat(prompt: str) -> str:
+    system = """You are Axon, a helpful AI assistant that lives on the user's desktop.
+You have access to the user's files, email, and system settings through other tools.
+For general questions, answer them directly, clearly, and concisely.
+Do not prefix your response with labels or categories.
+Just answer naturally like a knowledgeable assistant would."""
+    return query(prompt, system=system)
