@@ -8,12 +8,30 @@ const {
     ipcMain,
 } = require("electron");
 const path = require("path");
+const { spawn } = require("child_process");
 
 let mainPanel = null;
 let tray = null;
 
 const isDev = true;
 const VITE_PORT = 3000;
+
+let backendProcess = null;
+
+function startBackend() {
+    const backendPath = app.isPackaged
+        ? path.join(process.resourcesPath, "backend", "axon-backend.exe")
+        : path.join(__dirname, "..", "dist", "axon-backend.exe");
+
+    backendProcess = spawn(backendPath, [], {
+        detached: false,
+        stdio: "ignore",
+    });
+
+    backendProcess.on("error", (err) => {
+        console.error("Backend failed to start:", err);
+    });
+}
 
 function createMainPanel() {
     mainPanel = new BrowserWindow({
@@ -54,7 +72,10 @@ function togglePanel() {
 }
 
 app.whenReady().then(() => {
-    createMainPanel();
+    startBackend();
+    setTimeout(() => {
+        createMainPanel();
+    }, 1500);
 
     globalShortcut.register("Ctrl+Space", () => togglePanel());
 
@@ -88,5 +109,8 @@ app.whenReady().then(() => {
     });
 });
 
-app.on("will-quit", () => globalShortcut.unregisterAll());
+app.on("will-quit", () => {
+    globalShortcut.unregisterAll();
+    if (backendProcess) backendProcess.kill();
+});
 app.on("window-all-closed", (e) => e.preventDefault());

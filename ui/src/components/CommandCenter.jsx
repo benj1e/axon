@@ -3,18 +3,67 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // ── Mode config ────────────────────────────────────────────────────────────
 const MODES = {
-  default:  { symbol: null, label: "Axon",     color: "#8b5cf6", placeholder: "type > for files, / for web, ! for settings" },
-  files:    { symbol: ">",  label: "Files",    color: "#60a5fa", placeholder: "search files..."                              },
-  web:      { symbol: "/",  label: "Web",      color: "#f59e0b", placeholder: "search the web..."                           },
-  settings: { symbol: "!",  label: "Settings", color: "#fb923c", placeholder: "search settings..."                          },
-  task:     { symbol: "@",  label: "Do Task",  color: "#34d399", placeholder: "coming soon..."                              },
+    default: {
+        symbol: null,
+        label: "Axon",
+        color: "#8b5cf6",
+        placeholder: "type > for files, / for web, ! for settings",
+    },
+    files: {
+        symbol: ">",
+        label: "Files",
+        color: "#60a5fa",
+        placeholder: "search files...",
+    },
+    web: {
+        symbol: "/",
+        label: "Web",
+        color: "#f59e0b",
+        placeholder: "search the web...",
+    },
+    settings: {
+        symbol: "!",
+        label: "Settings",
+        color: "#fb923c",
+        placeholder: "search settings...",
+    },
+    task: {
+        symbol: "@",
+        label: "Do Task",
+        color: "#34d399",
+        placeholder: "coming soon...",
+    },
 };
 
 const COMMANDS = [
-  { symbol: ">", label: "File Search", description: "Find and open files",         color: "#60a5fa", enabled: true  },
-  { symbol: "/", label: "Web Search",  description: "Search in your browser",      color: "#f59e0b", enabled: true  },
-  { symbol: "!", label: "Settings",    description: "Open Windows settings",       color: "#fb923c", enabled: true  },
-  { symbol: "@", label: "Do Task",     description: "Automate browser tasks",      color: "#34d399", enabled: false },
+    {
+        symbol: ">",
+        label: "File Search",
+        description: "Find and open files",
+        color: "#60a5fa",
+        enabled: true,
+    },
+    {
+        symbol: "/",
+        label: "Web Search",
+        description: "Search in your browser",
+        color: "#f59e0b",
+        enabled: true,
+    },
+    {
+        symbol: "!",
+        label: "Settings",
+        description: "Open Windows settings",
+        color: "#fb923c",
+        enabled: true,
+    },
+    {
+        symbol: "@",
+        label: "Do Task",
+        description: "Automate browser tasks",
+        color: "#34d399",
+        enabled: false,
+    },
 ];
 
 // ── File type map ──────────────────────────────────────────────────────────
@@ -73,50 +122,96 @@ const ModeBadge = ({ mode }) => (
 );
 
 const CommandRow = ({ cmd, isSelected, onHover, onClick }) => (
-  <motion.div
-    onMouseEnter={onHover}
-    onClick={cmd.enabled ? onClick : undefined}
-    style={{
-      display: "flex", alignItems: "center", gap: "12px",
-      padding: "10px 12px", borderRadius: "10px",
-      cursor: cmd.enabled ? "default" : "not-allowed",
-      opacity: cmd.enabled ? 1 : 0.35,
-      background: isSelected && cmd.enabled ? "rgba(139,92,246,0.1)" : "transparent",
-      borderLeft: `2px solid ${isSelected && cmd.enabled ? "#8b5cf6" : "transparent"}`,
-      transition: "background 0.15s",
-    }}
-  >
-    <div style={{
-      width: "32px", height: "32px", borderRadius: "8px",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      background: `${cmd.color}15`, flexShrink: 0,
-      fontSize: "13px", fontWeight: 600, color: cmd.color,
-    }}>
-      {cmd.symbol}
-    </div>
-    <div style={{ flex: 1, minWidth: 0 }}>
-      <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.88)", fontWeight: 400 }}>
-        {cmd.label}
-      </div>
-      <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", marginTop: "1px" }}>
-        {cmd.description}
-      </div>
-    </div>
-    <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
-      {!cmd.enabled && (
-        <span style={{
-          fontSize: "9px", padding: "2px 6px", borderRadius: "4px",
-          background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.2)",
-          letterSpacing: "0.06em", textTransform: "uppercase",
-        }}>
-          soon
-        </span>
-      )}
-      <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.15)", fontFamily: "monospace" }}>
-        {cmd.symbol}
-      </span>
-    </div>
-  </motion.div>
+    <motion.div
+        onMouseEnter={onHover}
+        onClick={cmd.enabled ? onClick : undefined}
+        style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            padding: "10px 12px",
+            borderRadius: "10px",
+            cursor: cmd.enabled ? "default" : "not-allowed",
+            opacity: cmd.enabled ? 1 : 0.35,
+            background:
+                isSelected && cmd.enabled
+                    ? "rgba(139,92,246,0.1)"
+                    : "transparent",
+            borderLeft: `2px solid ${isSelected && cmd.enabled ? "#8b5cf6" : "transparent"}`,
+            transition: "background 0.15s",
+        }}
+    >
+        <div
+            style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: `${cmd.color}15`,
+                flexShrink: 0,
+                fontSize: "13px",
+                fontWeight: 600,
+                color: cmd.color,
+            }}
+        >
+            {cmd.symbol}
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+            <div
+                style={{
+                    fontSize: "13px",
+                    color: "rgba(255,255,255,0.88)",
+                    fontWeight: 400,
+                }}
+            >
+                {cmd.label}
+            </div>
+            <div
+                style={{
+                    fontSize: "11px",
+                    color: "rgba(255,255,255,0.28)",
+                    marginTop: "1px",
+                }}
+            >
+                {cmd.description}
+            </div>
+        </div>
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                flexShrink: 0,
+            }}
+        >
+            {!cmd.enabled && (
+                <span
+                    style={{
+                        fontSize: "9px",
+                        padding: "2px 6px",
+                        borderRadius: "4px",
+                        background: "rgba(255,255,255,0.05)",
+                        color: "rgba(255,255,255,0.2)",
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                    }}
+                >
+                    soon
+                </span>
+            )}
+            <span
+                style={{
+                    fontSize: "11px",
+                    color: "rgba(255,255,255,0.15)",
+                    fontFamily: "monospace",
+                }}
+            >
+                {cmd.symbol}
+            </span>
+        </div>
+    </motion.div>
 );
 
 const FileRow = ({ file, isSelected, onHover, onClick }) => {
@@ -212,38 +307,63 @@ const FileRow = ({ file, isSelected, onHover, onClick }) => {
 };
 
 const SettingsRow = ({ item, isSelected, onHover, onClick }) => (
-  <motion.div
-    onMouseEnter={onHover}
-    onClick={onClick}
-    style={{
-      display: "flex", alignItems: "center", gap: "12px",
-      padding: "10px 12px", borderRadius: "10px", cursor: "default",
-      background: isSelected ? "rgba(251,146,60,0.1)" : "transparent",
-      borderLeft: `2px solid ${isSelected ? "#fb923c" : "transparent"}`,
-      transition: "background 0.15s",
-    }}
-  >
-    <div style={{
-      width: "32px", height: "32px", borderRadius: "8px",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      background: "rgba(251,146,60,0.1)", flexShrink: 0,
-    }}>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
-        stroke="#fb923c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0 1.51 1h.09a1.65 1.65 0 0 0 1.51 1z"/>
-      </svg>
-    </div>
-    <div style={{ flex: 1 }}>
-      <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.88)" }}>
-        {item.name}
-      </div>
-    </div>
-    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.15)", fontFamily: "monospace" }}>
-      ↵ open
-    </div>
-  </motion.div>
-)
+    <motion.div
+        onMouseEnter={onHover}
+        onClick={onClick}
+        style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            padding: "10px 12px",
+            borderRadius: "10px",
+            cursor: "default",
+            background: isSelected ? "rgba(251,146,60,0.1)" : "transparent",
+            borderLeft: `2px solid ${isSelected ? "#fb923c" : "transparent"}`,
+            transition: "background 0.15s",
+        }}
+    >
+        <div
+            style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(251,146,60,0.1)",
+                flexShrink: 0,
+            }}
+        >
+            <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fb923c"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0 1.51 1h.09a1.65 1.65 0 0 0 1.51 1z" />
+            </svg>
+        </div>
+        <div style={{ flex: 1 }}>
+            <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.88)" }}>
+                {item.name}
+            </div>
+        </div>
+        <div
+            style={{
+                fontSize: "10px",
+                color: "rgba(255,255,255,0.15)",
+                fontFamily: "monospace",
+            }}
+        >
+            ↵ open
+        </div>
+    </motion.div>
+);
 
 const Shimmer = () => (
     <div
@@ -353,8 +473,8 @@ export default function CommandCenter() {
         fetch("http://localhost:5000/open/url", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url })
-        })
+            body: JSON.stringify({ url }),
+        });
     };
 
     const resetToDefault = () => {
@@ -370,7 +490,9 @@ export default function CommandCenter() {
         try {
             const url = str.trim();
             if (url.includes(" ") || !url.includes(".")) return false;
-            return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(url);
+            return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(
+                url,
+            );
         } catch {
             return false;
         }
@@ -389,7 +511,9 @@ export default function CommandCenter() {
         if (mode === "web" && input.trim()) {
             const query = input.trim();
             if (isUrl(query)) {
-                const url = query.startsWith("http") ? query : `https://${query}`;
+                const url = query.startsWith("http")
+                    ? query
+                    : `https://${query}`;
                 openInBrowser(url);
             } else {
                 openInBrowser(
@@ -400,33 +524,35 @@ export default function CommandCenter() {
             return;
         }
         if (mode === "settings") {
-          if (results[selectedIndex]) {
-            fetch("http://localhost:5000/open/url", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ url: results[selectedIndex].uri })
-            })
-            window.axon?.hide()
-          } else if (input.trim()) {
-            runSettings(input.trim())
-            window.axon?.hide()
-          }
-          return
+            if (results[selectedIndex]) {
+                fetch("http://localhost:5000/open/url", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: results[selectedIndex].uri }),
+                });
+                window.axon?.hide();
+            } else if (input.trim()) {
+                runSettings(input.trim());
+                window.axon?.hide();
+            }
+            return;
         }
     };
 
     const switchMode = (symbol) => {
-      const entry = Object.entries(MODES).find(([, v]) => v.symbol === symbol)
-      if (!entry) return
-      const cmd = COMMANDS.find(c => c.symbol === symbol)
-      if (cmd && !cmd.enabled) return  // block disabled modes
-      const [m] = entry
-      setMode(m)
-      setInput("")
-      setResults([])
-      setSelectedIndex(0)
-      setTimeout(() => inputRef.current?.focus(), 50)
-    }
+        const entry = Object.entries(MODES).find(
+            ([, v]) => v.symbol === symbol,
+        );
+        if (!entry) return;
+        const cmd = COMMANDS.find((c) => c.symbol === symbol);
+        if (cmd && !cmd.enabled) return; // block disabled modes
+        const [m] = entry;
+        setMode(m);
+        setInput("");
+        setResults([]);
+        setSelectedIndex(0);
+        setTimeout(() => inputRef.current?.focus(), 50);
+    };
 
     const handleInputChange = (e) => {
         const val = e.target.value;
@@ -457,8 +583,11 @@ export default function CommandCenter() {
             setLoading(true);
             searchTimeout.current = setTimeout(() => runFileSearch(val), 120);
         } else if (mode === "settings") {
-          setLoading(true)
-          searchTimeout.current = setTimeout(() => runSettingsSearch(val), 150)
+            setLoading(true);
+            searchTimeout.current = setTimeout(
+                () => runSettingsSearch(val),
+                150,
+            );
         }
     };
 
@@ -480,16 +609,21 @@ export default function CommandCenter() {
     };
 
     const runSettingsSearch = async (q) => {
-      try {
-        const res = await fetch(`http://localhost:5000/settings/search?q=${encodeURIComponent(q)}`)
-        const data = await res.json()
-        if (currentQuery.current === q) {
-          setResults(data.results || [])
-          setSelectedIndex(0)
+        try {
+            const res = await fetch(
+                `http://localhost:5000/settings/search?q=${encodeURIComponent(q)}`,
+            );
+            const data = await res.json();
+            if (currentQuery.current === q) {
+                setResults(data.results || []);
+                setSelectedIndex(0);
+            }
+        } catch {
+            setResults([]);
+        } finally {
+            setLoading(false);
         }
-      } catch { setResults([]) }
-      finally { setLoading(false) }
-    }
+    };
 
     const openFile = async (file) => {
         try {
@@ -805,7 +939,10 @@ export default function CommandCenter() {
                                             marginTop: "2px",
                                         }}
                                     >
-                                        press ↵ to {isUrl(input) ? "open link" : "search Google"}
+                                        press ↵ to{" "}
+                                        {isUrl(input)
+                                            ? "open link"
+                                            : "search Google"}
                                     </div>
                                 </div>
                             </motion.div>
@@ -813,24 +950,38 @@ export default function CommandCenter() {
 
                         {/* Settings results */}
                         {mode === "settings" && showResults && (
-                          <motion.div key="settings"
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                            style={{ padding: "8px" }}>
-                            {results.map((item, i) => (
-                              <SettingsRow key={item.uri} item={item}
-                                isSelected={i === selectedIndex}
-                                onHover={() => setSelectedIndex(i)}
-                                onClick={() => {
-                                  fetch("http://localhost:5000/open/url", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({ url: item.uri })
-                                  })
-                                  window.axon?.hide()
-                                }}
-                              />
-                            ))}
-                          </motion.div>
+                            <motion.div
+                                key="settings"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                style={{ padding: "8px" }}
+                            >
+                                {results.map((item, i) => (
+                                    <SettingsRow
+                                        key={item.uri}
+                                        item={item}
+                                        isSelected={i === selectedIndex}
+                                        onHover={() => setSelectedIndex(i)}
+                                        onClick={() => {
+                                            fetch(
+                                                "http://localhost:5000/open/url",
+                                                {
+                                                    method: "POST",
+                                                    headers: {
+                                                        "Content-Type":
+                                                            "application/json",
+                                                    },
+                                                    body: JSON.stringify({
+                                                        url: item.uri,
+                                                    }),
+                                                },
+                                            );
+                                            window.axon?.hide();
+                                        }}
+                                    />
+                                ))}
+                            </motion.div>
                         )}
 
                         {/* Empty state */}
